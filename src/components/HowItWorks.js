@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Plug, Brain, Rocket, LineChart } from "lucide-react";
 
@@ -26,6 +26,22 @@ const steps = [
 ];
 
 function HowItWorks() {
+  const [isDesktop, setIsDesktop] = useState(false);
+
+  // Check screen width for desktop/mobile
+  useEffect(() => {
+    const handleResize = () => {
+      setIsDesktop(window.innerWidth >= 768); // Desktop is 768px or wider
+    };
+
+    handleResize(); // Check on load
+    window.addEventListener("resize", handleResize); // Update on resize
+
+    return () => {
+      window.removeEventListener("resize", handleResize); // Cleanup
+    };
+  }, []);
+
   return (
     <section
       id="how-it-works"
@@ -39,18 +55,22 @@ function HowItWorks() {
       }}
     >
       {/* Floating blobs - animation only on desktop */}
-      <motion.div
-        initial={{ x: -100, y: -100 }}
-        animate={{ x: 0, y: 0 }}
-        transition={{ duration: 10, repeat: Infinity, repeatType: "mirror" }}
-        className="absolute w-[400px] h-[400px] bg-gradient-to-br from-[#6246ea] to-[#e45858] rounded-full opacity-30 blur-3xl top-[-150px] left-[-150px] z-0 hidden lg:block"
-      />
-      <motion.div
-        initial={{ x: 100, y: 100 }}
-        animate={{ x: 0, y: 0 }}
-        transition={{ duration: 12, repeat: Infinity, repeatType: "mirror" }}
-        className="absolute w-[300px] h-[300px] bg-gradient-to-tr from-[#3fc1c9] to-[#e45858] rounded-full opacity-30 blur-3xl bottom-[-150px] right-[-100px] z-0 hidden lg:block"
-      />
+      {isDesktop && (
+        <>
+          <motion.div
+            initial={{ x: -100, y: -100 }}
+            animate={{ x: 0, y: 0 }}
+            transition={{ duration: 10, repeat: Infinity, repeatType: "mirror" }}
+            className="absolute w-[400px] h-[400px] bg-gradient-to-br from-[#6246ea] to-[#e45858] rounded-full opacity-30 blur-3xl top-[-150px] left-[-150px] z-0"
+          />
+          <motion.div
+            initial={{ x: 100, y: 100 }}
+            animate={{ x: 0, y: 0 }}
+            transition={{ duration: 12, repeat: Infinity, repeatType: "mirror" }}
+            className="absolute w-[300px] h-[300px] bg-gradient-to-tr from-[#3fc1c9] to-[#e45858] rounded-full opacity-30 blur-3xl bottom-[-150px] right-[-100px] z-0"
+          />
+        </>
+      )}
 
       {/* Content */}
       <div className="relative z-10 max-w-6xl mx-auto text-center">
@@ -65,7 +85,7 @@ function HowItWorks() {
             <motion.div
               key={index}
               initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              whileInView={isDesktop ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.5, delay: index * 0.1 }}
               className="bg-white p-6 rounded-2xl shadow-lg hover:shadow-xl transition-all"
             >

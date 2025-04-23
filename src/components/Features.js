@@ -115,7 +115,7 @@ function Features() {
             <motion.div
               key={index}
               initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              whileInView={isDesktop ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.6, delay: index * 0.1 }}
               className="p-6 bg-white rounded-2xl shadow hover:shadow-xl transition"
             >
