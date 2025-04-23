@@ -1,6 +1,5 @@
 {
   "name": "freshai-landing",
-  "homepage": "https://prasanthece42.github.io/FreshAI",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
