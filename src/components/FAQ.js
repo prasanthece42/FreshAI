@@ -91,9 +91,10 @@ function FAQ() {
           {faqData.map((faq, index) => (
             <motion.div
               key={index}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.2 }}
+              // Only apply animation on desktop
+              initial={isDesktop ? { opacity: 0, y: 30 } : {}}
+              whileInView={isDesktop ? { opacity: 1, y: 0 } : {}}
+              transition={isDesktop ? { duration: 0.5, delay: index * 0.2 } : {}}
               className="bg-white p-6 rounded-2xl shadow-lg hover:shadow-xl transition-all"
             >
               <div
