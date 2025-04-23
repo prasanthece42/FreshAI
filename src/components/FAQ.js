@@ -54,13 +54,13 @@ function FAQ() {
         initial={{ x: -120, y: -80 }}
         animate={{ x: 0, y: 0 }}
         transition={{ duration: 15, repeat: Infinity, repeatType: "mirror" }}
-        className="absolute w-[350px] h-[350px] bg-gradient-to-br from-[#6246ea] to-[#3fc1c9] rounded-full opacity-30 blur-3xl top-[-100px] left-[-120px] z-0"
+        className="absolute w-[350px] h-[350px] bg-gradient-to-br from-[#6246ea] to-[#3fc1c9] rounded-full opacity-30 blur-3xl top-[-100px] left-[-120px] z-0 hidden md:block"
       />
       <motion.div
         initial={{ x: 80, y: 120 }}
         animate={{ x: 0, y: 0 }}
         transition={{ duration: 18, repeat: Infinity, repeatType: "mirror" }}
-        className="absolute w-[250px] h-[250px] bg-gradient-to-tr from-[#e45858] to-[#6246ea] rounded-full opacity-30 blur-3xl bottom-[-100px] right-[-80px] z-0"
+        className="absolute w-[250px] h-[250px] bg-gradient-to-tr from-[#e45858] to-[#6246ea] rounded-full opacity-30 blur-3xl bottom-[-100px] right-[-80px] z-0 hidden md:block"
       />
 
       <div className="relative z-10 max-w-4xl mx-auto text-center">
@@ -70,8 +70,11 @@ function FAQ() {
 
         <div className="space-y-6">
           {faqData.map((faq, index) => (
-            <div
+            <motion.div
               key={index}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: index * 0.2 }}
               className="bg-white p-6 rounded-2xl shadow-lg hover:shadow-xl transition-all"
             >
               <div
@@ -90,7 +93,7 @@ function FAQ() {
                   {faq.answer}
                 </motion.div>
               )}
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>

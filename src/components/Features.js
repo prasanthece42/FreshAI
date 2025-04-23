@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Zap, MessageSquare, Send, TrendingUp, BarChart3, Database, Mail, Target, Users, DollarSign } from "lucide-react";
 
@@ -56,6 +56,22 @@ const features = [
 ];
 
 function Features() {
+  const [isDesktop, setIsDesktop] = useState(false);
+
+  // Check screen width for desktop/mobile
+  useEffect(() => {
+    const handleResize = () => {
+      setIsDesktop(window.innerWidth >= 768); // Desktop is 768px or wider
+    };
+
+    handleResize(); // Check on load
+    window.addEventListener("resize", handleResize); // Update on resize
+
+    return () => {
+      window.removeEventListener("resize", handleResize); // Cleanup
+    };
+  }, []);
+
   return (
     <section
       id="features"
@@ -69,18 +85,22 @@ function Features() {
       }}
     >
       {/* Floating blobs */}
-      <motion.div
-        initial={{ x: -100, y: -100 }}
-        animate={{ x: 0, y: 0 }}
-        transition={{ duration: 10, repeat: Infinity, repeatType: "mirror" }}
-        className="absolute w-[400px] h-[400px] bg-gradient-to-br from-[#6246ea] to-[#e45858] rounded-full opacity-30 blur-3xl top-[-150px] left-[-150px] z-0"
-      />
-      <motion.div
-        initial={{ x: 100, y: 100 }}
-        animate={{ x: 0, y: 0 }}
-        transition={{ duration: 12, repeat: Infinity, repeatType: "mirror" }}
-        className="absolute w-[300px] h-[300px] bg-gradient-to-tr from-[#3fc1c9] to-[#e45858] rounded-full opacity-30 blur-3xl bottom-[-150px] right-[-100px] z-0"
-      />
+      {isDesktop && (
+        <>
+          <motion.div
+            initial={{ x: -100, y: -100 }}
+            animate={{ x: 0, y: 0 }}
+            transition={{ duration: 10, repeat: Infinity, repeatType: "mirror" }}
+            className="absolute w-[400px] h-[400px] bg-gradient-to-br from-[#6246ea] to-[#e45858] rounded-full opacity-30 blur-3xl top-[-150px] left-[-150px] z-0"
+          />
+          <motion.div
+            initial={{ x: 100, y: 100 }}
+            animate={{ x: 0, y: 0 }}
+            transition={{ duration: 12, repeat: Infinity, repeatType: "mirror" }}
+            className="absolute w-[300px] h-[300px] bg-gradient-to-tr from-[#3fc1c9] to-[#e45858] rounded-full opacity-30 blur-3xl bottom-[-150px] right-[-100px] z-0"
+          />
+        </>
+      )}
 
       {/* Content */}
       <div className="max-w-6xl mx-auto text-center relative z-10">
@@ -97,7 +117,7 @@ function Features() {
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: index * 0.1 }}
-              className="p-6 bg-white rounded-2xl shadow hover:shadow-lg transition"
+              className="p-6 bg-white rounded-2xl shadow hover:shadow-xl transition"
             >
               <div className="mb-4">{feature.icon}</div>
               <h3 className="text-xl font-semibold text-gray-800">{feature.title}</h3>

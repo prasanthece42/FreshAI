@@ -78,7 +78,7 @@ function Pricing() {
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: index * 0.2 }}
-              className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all"
+              className="lg:block hidden bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all"
             >
               <div className="flex justify-between items-center">
                 <h3 className="text-2xl font-semibold text-gray-800">{plan.title}</h3>
@@ -111,6 +111,41 @@ function Pricing() {
                 </a>
               </div>
             </motion.div>
+          ))}
+          {/* Static pricing plans for smaller screens */}
+          {plans.map((plan, index) => (
+            <div key={index} className="lg:hidden block bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all">
+              <div className="flex justify-between items-center">
+                <h3 className="text-2xl font-semibold text-gray-800">{plan.title}</h3>
+                {plan.title !== "Free" && (
+                  <span className="text-xs bg-yellow-200 text-yellow-800 px-2 py-1 rounded-full">
+                    Early Access
+                  </span>
+                )}
+              </div>
+              <p className="mt-4 text-4xl font-bold text-[#6246ea]">{plan.price}</p>
+              <ul className="mt-6 text-gray-600 space-y-2 text-left">
+                {plan.features.map((feature, index) => (
+                  <li key={index} className="flex items-center space-x-2">
+                    <span>✅</span>
+                    <span>{feature}</span>
+                  </li>
+                ))}
+              </ul>
+              {plan.title !== "Free" && (
+                <p className="text-sm text-red-500 mt-4">
+                  Limited time pricing – will increase soon!
+                </p>
+              )}
+              <div className="mt-6">
+                <a
+                  href="#"
+                  className="inline-block bg-[#6246ea] text-white px-6 py-3 rounded-xl text-lg font-medium shadow-md transition hover:bg-[#4e3ac9]"
+                >
+                  {plan.title === "Free" ? "Start for Free" : "Choose Plan"}
+                </a>
+              </div>
+            </div>
           ))}
         </div>
       </div>
