@@ -115,9 +115,9 @@ function Features() {
           {features.map((feature, index) => (
             <motion.div
               key={index}
-              initial={isDesktop ? { opacity: 0, y: 30 } : {}}
-              whileInView={isDesktop ? { opacity: 1, y: 0 } : {}}
-              transition={isDesktop ? { duration: 0.5, delay: index * 0.2 } : {}}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: index * 0.2 }}
               className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all"
             >
               <div className="mb-4">{feature.icon}</div>

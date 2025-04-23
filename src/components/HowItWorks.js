@@ -28,18 +28,14 @@ const steps = [
 function HowItWorks() {
   const [isDesktop, setIsDesktop] = useState(false);
 
-  // Check screen width for desktop/mobile
   useEffect(() => {
     const handleResize = () => {
-      setIsDesktop(window.innerWidth >= 768); // Desktop is 768px or wider
+      setIsDesktop(window.innerWidth >= 768);
     };
 
-    handleResize(); // Check on load
-    window.addEventListener("resize", handleResize); // Update on resize
-
-    return () => {
-      window.removeEventListener("resize", handleResize); // Cleanup
-    };
+    handleResize(); // Initial check
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   return (
@@ -54,7 +50,6 @@ function HowItWorks() {
         backgroundSize: "40px 40px",
       }}
     >
-      {/* Floating blobs - animation only on desktop */}
       {isDesktop && (
         <>
           <motion.div
@@ -72,7 +67,6 @@ function HowItWorks() {
         </>
       )}
 
-      {/* Content */}
       <div className="relative z-10 max-w-6xl mx-auto text-center">
         <h2 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-gray-900 mb-6">
           How FreshAI Supercharges Your Workflow
@@ -84,9 +78,9 @@ function HowItWorks() {
           {steps.map((step, index) => (
             <motion.div
               key={index}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={isDesktop ? { opacity: 1, y: 0 } : { opacity: 1 }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
+              initial={isDesktop ? { opacity: 0, y: 30 } : {}}
+              whileInView={isDesktop ? { opacity: 1, y: 0 } : {}}
+              transition={isDesktop ? { duration: 0.5, delay: index * 0.1 } : {}}
               className="bg-white p-6 rounded-2xl shadow-lg hover:shadow-xl transition-all"
             >
               <div className="mb-4">{step.icon}</div>
