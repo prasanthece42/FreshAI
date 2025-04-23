@@ -1,8 +1,23 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 
 function FAQ() {
   const [activeIndex, setActiveIndex] = useState(null);
+  const [isDesktop, setIsDesktop] = useState(false);
+
+  // Check screen width for desktop/mobile
+  useEffect(() => {
+    const handleResize = () => {
+      setIsDesktop(window.innerWidth >= 768); // Desktop is 768px or wider
+    };
+
+    handleResize(); // Check on load
+    window.addEventListener("resize", handleResize); // Update on resize
+
+    return () => {
+      window.removeEventListener("resize", handleResize); // Cleanup
+    };
+  }, []);
 
   const toggleQuestion = (index) => {
     setActiveIndex(activeIndex === index ? null : index);
@@ -50,18 +65,22 @@ function FAQ() {
       }}
     >
       {/* Floating blobs */}
-      <motion.div
-        initial={{ x: -120, y: -80 }}
-        animate={{ x: 0, y: 0 }}
-        transition={{ duration: 15, repeat: Infinity, repeatType: "mirror" }}
-        className="absolute w-[350px] h-[350px] bg-gradient-to-br from-[#6246ea] to-[#3fc1c9] rounded-full opacity-30 blur-3xl top-[-100px] left-[-120px] z-0 hidden md:block"
-      />
-      <motion.div
-        initial={{ x: 80, y: 120 }}
-        animate={{ x: 0, y: 0 }}
-        transition={{ duration: 18, repeat: Infinity, repeatType: "mirror" }}
-        className="absolute w-[250px] h-[250px] bg-gradient-to-tr from-[#e45858] to-[#6246ea] rounded-full opacity-30 blur-3xl bottom-[-100px] right-[-80px] z-0 hidden md:block"
-      />
+      {isDesktop && (
+        <>
+          <motion.div
+            initial={{ x: -120, y: -80 }}
+            animate={{ x: 0, y: 0 }}
+            transition={{ duration: 15, repeat: Infinity, repeatType: "mirror" }}
+            className="absolute w-[350px] h-[350px] bg-gradient-to-br from-[#6246ea] to-[#3fc1c9] rounded-full opacity-30 blur-3xl top-[-100px] left-[-120px] z-0 hidden md:block"
+          />
+          <motion.div
+            initial={{ x: 80, y: 120 }}
+            animate={{ x: 0, y: 0 }}
+            transition={{ duration: 18, repeat: Infinity, repeatType: "mirror" }}
+            className="absolute w-[250px] h-[250px] bg-gradient-to-tr from-[#e45858] to-[#6246ea] rounded-full opacity-30 blur-3xl bottom-[-100px] right-[-80px] z-0 hidden md:block"
+          />
+        </>
+      )}
 
       <div className="relative z-10 max-w-4xl mx-auto text-center">
         <h2 className="text-4xl font-extrabold text-gray-900 mb-8">
