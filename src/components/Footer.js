@@ -29,8 +29,6 @@ function Footer() {
           <div>
             <h3 className="text-xl font-semibold mb-4">Contact Us</h3>
             <p className="text-sm mb-4">Have questions? Reach out to our support team.</p>
-            <p className="text-sm">support@freshai.com</p>
-            <p className="text-sm">+1 (555) 123-4567</p>
           </div>
         </div>
 

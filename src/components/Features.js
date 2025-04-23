@@ -90,7 +90,7 @@ function Features() {
         <p className="text-gray-600 text-lg max-w-3xl mx-auto mb-12">
           Our AI does more than chat. It helps you sell, support, and scale your business with advanced automation and deep insights.
         </p>
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-10">
           {features.map((feature, index) => (
             <motion.div
               key={index}

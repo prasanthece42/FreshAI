@@ -4,22 +4,22 @@ import { Plug, Brain, Rocket, LineChart } from "lucide-react";
 
 const steps = [
   {
-    icon: <Plug className="w-8 h-8 text-[#6246ea]" />,
+    icon: <Plug className="w-6 h-6 md:w-8 md:h-8 text-[#6246ea]" />,
     title: "Connect Platforms",
     desc: "Link all your social media channels and centralize customer conversations."
   },
   {
-    icon: <Brain className="w-8 h-8 text-[#6246ea]" />,
+    icon: <Brain className="w-6 h-6 md:w-8 md:h-8 text-[#6246ea]" />,
     title: "Train the AI",
     desc: "Feed it your business data — from your website, PDFs, or custom content."
   },
   {
-    icon: <Rocket className="w-8 h-8 text-[#6246ea]" />,
+    icon: <Rocket className="w-6 h-6 md:w-8 md:h-8 text-[#6246ea]" />,
     title: "Automate Everything",
     desc: "Let AI handle responses, payments, campaigns, and customer management."
   },
   {
-    icon: <LineChart className="w-8 h-8 text-[#6246ea]" />,
+    icon: <LineChart className="w-6 h-6 md:w-8 md:h-8 text-[#6246ea]" />,
     title: "Track Insights",
     desc: "Monitor real-time sales, customer behavior, and revenue performance."
   }
@@ -54,13 +54,13 @@ function HowItWorks() {
 
       {/* Content */}
       <div className="relative z-10 max-w-6xl mx-auto text-center">
-        <h2 className="text-4xl md:text-5xl font-extrabold text-gray-900 mb-6">
+        <h2 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-gray-900 mb-6">
           How FreshAI Supercharges Your Workflow
         </h2>
         <p className="text-gray-600 text-lg max-w-3xl mx-auto mb-12">
           From setup to results in minutes — here’s how FreshAI transforms your business with smart automation.
         </p>
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-10">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-4">
           {steps.map((step, index) => (
             <motion.div
               key={index}
