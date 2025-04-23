@@ -80,12 +80,12 @@ function HowItWorks() {
         <p className="text-gray-600 text-lg max-w-3xl mx-auto mb-12">
           From setup to results in minutes — here’s how FreshAI transforms your business with smart automation.
         </p>
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-4">
+        <div className={`grid ${isDesktop ? "md:grid-cols-2 lg:grid-cols-4" : "grid-cols-1"} gap-6 sm:gap-4`}>
           {steps.map((step, index) => (
             <motion.div
               key={index}
               initial={{ opacity: 0, y: 30 }}
-              whileInView={isDesktop ? { opacity: 1, y: 0 } : {}}
+              whileInView={isDesktop ? { opacity: 1, y: 0 } : { opacity: 1 }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
               className="bg-white p-6 rounded-2xl shadow-lg hover:shadow-xl transition-all"
             >
