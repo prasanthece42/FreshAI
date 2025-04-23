@@ -75,13 +75,13 @@ function Features() {
   return (
     <section
       id="features"
-      className="relative py-20 px-6 bg-gradient-to-r from-[#f8f9fc] via-[#e8eaf0] to-[#ffffff]"
+      className="relative py-20 px-6 bg-[#f8f9fc]"
       style={{
-        backgroundSize: "40px 40px",
         backgroundImage: `
           linear-gradient(0deg, transparent 24%, rgba(0,0,0,0.02) 25%, rgba(0,0,0,0.02) 26%, transparent 27%, transparent 74%, rgba(0,0,0,0.02) 75%, rgba(0,0,0,0.02) 76%, transparent 77%, transparent),
           linear-gradient(90deg, transparent 24%, rgba(0,0,0,0.02) 25%, rgba(0,0,0,0.02) 26%, transparent 27%, transparent 74%, rgba(0,0,0,0.02) 75%, rgba(0,0,0,0.02) 76%, transparent 77%, transparent)
-        `
+        `,
+        backgroundSize: "40px 40px",
       }}
     >
       {/* Floating blobs */}
@@ -104,20 +104,21 @@ function Features() {
 
       {/* Content */}
       <div className="max-w-6xl mx-auto text-center relative z-10">
-        <h2 className="text-4xl md:text-5xl font-extrabold text-gray-900 mb-6">
+        <h2 className="text-4xl md:text-5xl font-extrabold text-gray-900 mb-4">
           Everything You Need in One AI Platform
         </h2>
         <p className="text-gray-600 text-lg max-w-3xl mx-auto mb-12">
           Our AI does more than chat. It helps you sell, support, and scale your business with advanced automation and deep insights.
         </p>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-10">
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 sm:gap-8">
           {features.map((feature, index) => (
             <motion.div
               key={index}
               initial={{ opacity: 0, y: 30 }}
-              whileInView={isDesktop ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
-              className="p-6 bg-white rounded-2xl shadow hover:shadow-xl transition"
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: index * 0.2 }}
+              className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all"
             >
               <div className="mb-4">{feature.icon}</div>
               <h3 className="text-xl font-semibold text-gray-800">{feature.title}</h3>
