@@ -58,18 +58,13 @@ const features = [
 function Features() {
   const [isDesktop, setIsDesktop] = useState(false);
 
-  // Check screen width for desktop/mobile
   useEffect(() => {
     const handleResize = () => {
-      setIsDesktop(window.innerWidth >= 768); // Desktop is 768px or wider
+      setIsDesktop(window.innerWidth >= 768);
     };
-
-    handleResize(); // Check on load
-    window.addEventListener("resize", handleResize); // Update on resize
-
-    return () => {
-      window.removeEventListener("resize", handleResize); // Cleanup
-    };
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   return (
@@ -84,7 +79,6 @@ function Features() {
         backgroundSize: "40px 40px",
       }}
     >
-      {/* Floating blobs */}
       {isDesktop && (
         <>
           <motion.div
@@ -102,7 +96,6 @@ function Features() {
         </>
       )}
 
-      {/* Content */}
       <div className="max-w-6xl mx-auto text-center relative z-10">
         <h2 className="text-4xl md:text-5xl font-extrabold text-gray-900 mb-4">
           Everything You Need in One AI Platform
@@ -115,9 +108,9 @@ function Features() {
           {features.map((feature, index) => (
             <motion.div
               key={index}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.2 }}
+              initial={isDesktop ? { opacity: 0, y: 30 } : {}}
+              whileInView={isDesktop ? { opacity: 1, y: 0 } : {}}
+              transition={isDesktop ? { duration: 0.5, delay: index * 0.2 } : {}}
               className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all"
             >
               <div className="mb-4">{feature.icon}</div>
