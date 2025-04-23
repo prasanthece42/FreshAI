@@ -64,7 +64,7 @@ function FAQ() {
         backgroundSize: "40px 40px",
       }}
     >
-      {/* Floating blobs */}
+      {/* Floating blobs only for desktop */}
       {isDesktop && (
         <>
           <motion.div
