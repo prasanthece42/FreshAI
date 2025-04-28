@@ -1,124 +1,108 @@
-import React, { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+'use client'
+import React, { useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { ChevronDown } from 'lucide-react'
 
-function FAQ() {
-  const [activeIndex, setActiveIndex] = useState(null);
-  const [isDesktop, setIsDesktop] = useState(false);
+const faqs = [
+  {
+    question: 'What is FreshAI?',
+    answer:
+      'FreshAI is an AI-powered assistant that automates customer support, handles queries, integrates with your CRM, and helps manage appointments and conversations across platforms like Instagram, WhatsApp, and email.',
+  },
+  {
+    question: 'How do I connect my social media channels?',
+    answer:
+      'You can link platforms like Instagram, WhatsApp, and Gmail within seconds through your dashboard. We provide easy plug-and-play integrations.',
+  },
+  {
+    question: 'Can I train the AI with my own content?',
+    answer:
+      'Yes! Upload your website, PDFs, or FAQs, and the AI will learn your tone, brand language, and key information to respond just like your team.',
+  },
+  {
+    question: 'Is coding required to set up FreshAI?',
+    answer:
+      'Nope. Everything is no-code. Just plug in your channels, upload your content, and you’re good to go.',
+  },
+  {
+    question: 'Can it book appointments or reservations?',
+    answer:
+      'Yes, FreshAI can help customers schedule appointments or make reservations through real-time conversation.',
+  },
+]
 
-  // Check screen width for desktop/mobile
-  useEffect(() => {
-    const handleResize = () => {
-      setIsDesktop(window.innerWidth >= 768); // Desktop is 768px or wider
-    };
+export default function FaqSection() {
+  const [activeIndex, setActiveIndex] = useState(null)
 
-    handleResize(); // Check on load
-    window.addEventListener("resize", handleResize); // Update on resize
-
-    return () => {
-      window.removeEventListener("resize", handleResize); // Cleanup
-    };
-  }, []);
-
-  const toggleQuestion = (index) => {
-    setActiveIndex(activeIndex === index ? null : index);
-  };
-
-  const faqData = [
-    {
-      question: "What is FreshAI?",
-      answer:
-        "FreshAI is an AI-powered SaaS platform that helps businesses automate customer interactions, marketing campaigns, and sales analytics. It integrates with social media, CRM systems, and more.",
-    },
-    {
-      question: "How does FreshAI help with customer support?",
-      answer:
-        "FreshAI offers AI-driven chatbots and virtual assistants that handle customer queries, provide automated responses, and integrate with popular customer service platforms.",
-    },
-    {
-      question: "Can I integrate FreshAI with my CRM?",
-      answer:
-        "Yes, FreshAI integrates seamlessly with popular CRM systems like Salesforce and HubSpot to help you manage customer interactions and sales processes.",
-    },
-    {
-      question: "What kind of businesses can benefit from FreshAI?",
-      answer:
-        "FreshAI is ideal for businesses of all sizes looking to automate their customer service, marketing, and sales processes. It’s particularly useful for eCommerce, SaaS, and service-oriented businesses.",
-    },
-    {
-      question: "How do I get started with FreshAI?",
-      answer:
-        "Simply join our waitlist, and you’ll be notified once we’re live! After that, you can start using our platform by signing up and integrating your accounts.",
-    },
-  ];
+  const toggleIndex = (index) => {
+    setActiveIndex(activeIndex === index ? null : index)
+  }
 
   return (
     <section
       id="faq"
-      className="relative py-16 bg-[#f8f9fc] px-6"
+      className="w-full py-20 px-6"
       style={{
-        backgroundColor: "#f8f9fc",
+        backgroundColor: '#f8f9fc',
         backgroundImage: `
           linear-gradient(0deg, transparent 24%, rgba(0,0,0,0.02) 25%, rgba(0,0,0,0.02) 26%, transparent 27%, transparent 74%, rgba(0,0,0,0.02) 75%, rgba(0,0,0,0.02) 76%, transparent 77%, transparent),
           linear-gradient(90deg, transparent 24%, rgba(0,0,0,0.02) 25%, rgba(0,0,0,0.02) 26%, transparent 27%, transparent 74%, rgba(0,0,0,0.02) 75%, rgba(0,0,0,0.02) 76%, transparent 77%, transparent)
         `,
-        backgroundSize: "40px 40px",
+        backgroundSize: '40px 40px',
       }}
     >
-      {/* Floating blobs only for desktop */}
-      {isDesktop && (
-        <>
-          <motion.div
-            initial={{ x: -120, y: -80 }}
-            animate={{ x: 0, y: 0 }}
-            transition={{ duration: 15, repeat: Infinity, repeatType: "mirror" }}
-            className="absolute w-[350px] h-[350px] bg-gradient-to-br from-[#6246ea] to-[#3fc1c9] rounded-full opacity-30 blur-3xl top-[-100px] left-[-120px] z-0 hidden md:block"
-          />
-          <motion.div
-            initial={{ x: 80, y: 120 }}
-            animate={{ x: 0, y: 0 }}
-            transition={{ duration: 18, repeat: Infinity, repeatType: "mirror" }}
-            className="absolute w-[250px] h-[250px] bg-gradient-to-tr from-[#e45858] to-[#6246ea] rounded-full opacity-30 blur-3xl bottom-[-100px] right-[-80px] z-0 hidden md:block"
-          />
-        </>
-      )}
-
-      <div className="relative z-10 max-w-4xl mx-auto text-center">
-        <h2 className="text-4xl font-extrabold text-gray-900 mb-8">
+      <motion.div
+        className="max-w-3xl mx-auto text-center mb-12"
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+        viewport={{ once: true }}
+      >
+        <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
           Frequently Asked Questions
         </h2>
+        <p className="text-gray-600 text-lg md:text-xl">
+          Everything you need to know about FreshAI.
+        </p>
+      </motion.div>
 
-        <div className="space-y-6">
-          {faqData.map((faq, index) => (
-            <motion.div
-              key={index}
-              // Only apply animation on desktop
-              initial={isDesktop ? { opacity: 0, y: 30 } : {}}
-              whileInView={isDesktop ? { opacity: 1, y: 0 } : {}}
-              transition={isDesktop ? { duration: 0.5, delay: index * 0.2 } : {}}
-              className="bg-white p-6 rounded-2xl shadow-lg hover:shadow-xl transition-all"
-            >
-              <div
-                className="cursor-pointer text-xl font-semibold text-gray-900"
-                onClick={() => toggleQuestion(index)}
-              >
+      <div className="max-w-2xl mx-auto space-y-4">
+        {faqs.map((faq, index) => (
+          <motion.div
+            key={index}
+            layout
+            onClick={() => toggleIndex(index)}
+            className={`cursor-pointer backdrop-blur-md bg-white/70 border rounded-2xl shadow-sm hover:shadow-lg transition-all px-6 py-5 ${
+              activeIndex === index
+                ? 'border-[#6246ea] ring-2 ring-[#6246ea]'
+                : 'border-gray-200'
+            }`}
+          >
+            <div className="flex justify-between items-center">
+              <h3 className="text-lg font-semibold text-gray-800">
                 {faq.question}
-              </div>
+              </h3>
+              <ChevronDown
+                className={`w-5 h-5 text-gray-500 transition-transform duration-300 ${
+                  activeIndex === index ? 'rotate-180' : ''
+                }`}
+              />
+            </div>
+            <AnimatePresence>
               {activeIndex === index && (
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ duration: 0.3 }}
-                  className="mt-4 text-lg text-gray-600"
+                <motion.p
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: 'auto' }}
+                  exit={{ opacity: 0, height: 0 }}
+                  className="mt-3 text-gray-600 text-sm overflow-hidden"
                 >
                   {faq.answer}
-                </motion.div>
+                </motion.p>
               )}
-            </motion.div>
-          ))}
-        </div>
+            </AnimatePresence>
+          </motion.div>
+        ))}
       </div>
     </section>
-  );
+  )
 }
-
-export default FAQ;

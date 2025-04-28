@@ -36,3 +36,135 @@
     transform: rotate(360deg);
   }
 }
+/* Add this to your global CSS or use Tailwind for styling */
+.admin-dashboard {
+  padding: 2rem;
+  background-color: #f9fafb;
+}
+
+.conversations-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.conversations-table th,
+.conversations-table td {
+  padding: 1rem;
+  text-align: left;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.conversations-table th {
+  background-color: #f3f4f6;
+}
+
+/* Add styles for .auth-container */
+.auth-container {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #fff;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+.auth-container h2 {
+  text-align: center;
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.auth-container input {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.auth-container button {
+  width: 100%;
+  padding: 12px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.auth-container button:hover {
+  background-color: #0056b3;
+}
+
+.auth-container p {
+  text-align: center;
+}
+
+.auth-container button {
+  background-color: #28a745;
+  border-radius: 5px;
+}
+
+/* Add this to your global styles or a specific CSS module */
+.floating-card {
+  animation: floating 6s ease-in-out infinite;
+  will-change: transform;
+}
+
+@keyframes floating {
+  0% {
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    transform: translateY(-10px) scale(1.05); /* Slight lift and scale */
+  }
+  100% {
+    transform: translateY(0) scale(1);
+  }
+}
+/* Add this to your global styles or a specific CSS module */
+
+/* Floating animation for feature cards */
+.floating-card {
+  animation: floating 6s ease-in-out infinite;
+  will-change: transform;
+}
+
+@keyframes floating {
+  0% {
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    transform: translateY(-15px) scale(1.05); /* Slight lift and scale */
+  }
+  100% {
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Animation for header in feature section */
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-header {
+  animation: fadeInUp 1s ease-out forwards;
+}
+@keyframes float {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-15px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}

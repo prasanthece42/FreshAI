@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
 
 const plans = [
@@ -13,7 +13,7 @@ const plans = [
   },
   {
     title: "Starter",
-    price: "$29/month", // Updated price
+    price: "$29/month",
     features: [
       "3 AI assistants",
       "1,000 messages/month",
@@ -23,7 +23,7 @@ const plans = [
   },
   {
     title: "Pro",
-    price: "$79/month", // Updated price
+    price: "$79/month",
     features: [
       "10 AI assistants",
       "10,000 messages/month",
@@ -34,6 +34,12 @@ const plans = [
 ];
 
 function Pricing() {
+  const [selectedPlan, setSelectedPlan] = useState(null); // Track the selected plan
+
+  const handleClick = (plan) => {
+    setSelectedPlan(plan); // Set the clicked plan as selected
+  };
+
   return (
     <section
       id="pricing"
@@ -51,13 +57,21 @@ function Pricing() {
       <motion.div
         initial={{ x: -100, y: -100 }}
         animate={{ x: 0, y: 0 }}
-        transition={{ duration: 10, repeat: Infinity, repeatType: "mirror" }}
+        transition={{
+          duration: 10,
+          repeat: Infinity,
+          repeatType: "mirror",
+        }}
         className="absolute w-[400px] h-[400px] bg-gradient-to-br from-[#6246ea] to-[#e45858] rounded-full opacity-30 blur-3xl top-[-150px] left-[-150px] z-0"
       />
       <motion.div
         initial={{ x: 100, y: 100 }}
         animate={{ x: 0, y: 0 }}
-        transition={{ duration: 12, repeat: Infinity, repeatType: "mirror" }}
+        transition={{
+          duration: 12,
+          repeat: Infinity,
+          repeatType: "mirror",
+        }}
         className="absolute w-[300px] h-[300px] bg-gradient-to-tr from-[#3fc1c9] to-[#e45858] rounded-full opacity-30 blur-3xl bottom-[-150px] right-[-100px] z-0"
       />
 
@@ -78,7 +92,14 @@ function Pricing() {
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: index * 0.2 }}
-              className="lg:block hidden bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all"
+              className={`lg:block hidden bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all ${
+                selectedPlan === plan
+                  ? "scale-105 shadow-2xl" // Highlight the selected plan
+                  : "scale-100"
+              }`}
+              onClick={() => handleClick(plan)} // Handle click to highlight
+              whileHover={{ y: -10 }} // Floating effect on hover
+              whileTap={{ scale: 0.95 }} // Slight scaling effect on click
             >
               <div className="flex justify-between items-center">
                 <h3 className="text-2xl font-semibold text-gray-800">{plan.title}</h3>
@@ -114,7 +135,14 @@ function Pricing() {
           ))}
           {/* Static pricing plans for smaller screens */}
           {plans.map((plan, index) => (
-            <div key={index} className="lg:hidden block bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all">
+            <div
+              key={index}
+              className={`lg:hidden block bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all ${
+                selectedPlan === plan ? "scale-105 shadow-2xl" : ""
+              }`}
+              onClick={() => handleClick(plan)} // Handle click to highlight
+              style={{ transform: "translateY(-10px)" }} // Floating effect
+            >
               <div className="flex justify-between items-center">
                 <h3 className="text-2xl font-semibold text-gray-800">{plan.title}</h3>
                 {plan.title !== "Free" && (

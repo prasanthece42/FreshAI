@@ -1,141 +1,152 @@
-import React, { useState } from "react";
-import { Link } from "react-scroll"; // Import Link from react-scroll
+import React, { useState, useEffect } from "react";
+import { Link as RouterLink } from "react-router-dom";
+import { Link as ScrollLink } from "react-scroll";
+import { supabase } from "../supabase";
 
-function Navbar() {
-  const [isOpen, setIsOpen] = useState(false);
+function Navbar({ onSignInClick }) {
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [user, setUser] = useState(null);
 
-  // Toggle mobile menu
-  const toggleMenu = () => setIsOpen(!isOpen);
+  useEffect(() => {
+    const getUser = async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      setUser(user);
+    };
+    getUser();
+
+    const { data: listener } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user || null);
+    });
+
+    return () => {
+      listener?.subscription?.unsubscribe();
+    };
+  }, []);
+
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+    setUser(null);
+  };
+
+  const toggleMenu = () => setMenuOpen(!menuOpen);
 
   return (
-    <header className="sticky top-0 z-50 bg-white/70 backdrop-blur-md shadow-sm">
+    <header className="sticky top-0 z-50 bg-white shadow-md">
       <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-        {/* Logo */}
-        <a href="#" className="text-2xl font-bold text-gray-900">
-          <span className="bg-gradient-to-r from-[#6246ea] to-[#e45858] text-transparent bg-clip-text">
-            FreshAI
-          </span>
-        </a>
+        {/* FreshAI Text with Multicolor Gradient */}
+        <RouterLink 
+          to="/" 
+          className="text-3xl font-semibold bg-clip-text text-transparent bg-gradient-to-r from-[#9b59b6] to-[#6a1b9a] hover:text-transparent"
+        >
+          FreshAI
+        </RouterLink>
 
-        {/* Mobile Menu Icon */}
-        <div className="md:hidden flex items-center">
-          <button onClick={toggleMenu} className="text-gray-900 hover:text-[#6246ea] focus:outline-none">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              className="w-6 h-6"
+        <nav className="hidden md:flex space-x-8 items-center text-[#0a2540] font-medium">
+          {["features", "how-it-works", "pricing", "join-waitlist"].map((item) => (
+            <ScrollLink
+              key={item}
+              to={item}
+              smooth
+              duration={500}
+              className="cursor-pointer relative group"
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M4 6h16M4 12h16M4 18h16"
-              />
-            </svg>
-          </button>
-        </div>
-
-        {/* Nav Links (Desktop) */}
-        <nav className="hidden md:flex space-x-8 text-gray-700 font-medium">
-          <Link
-            to="features"
-            smooth={true}
-            duration={500}
-            className="hover:text-[#6246ea] transition"
-          >
-            Features
-          </Link>
-          <Link
-            to="how-it-works"
-            smooth={true}
-            duration={500}
-            className="hover:text-[#6246ea] transition"
-          >
-            How It Works
-          </Link>
-          <Link
-            to="pricing"
-            smooth={true}
-            duration={500}
-            className="hover:text-[#6246ea] transition"
-          >
-            Pricing
-          </Link>
-          <Link
-            to="join-waitlist" // Ensure this matches the id of JoinWaitlist section
-            smooth={true}
-            duration={500}
-            className="hover:text-[#6246ea] transition"
-          >
-            Join Waitlist
-          </Link>
+              {item.replace("-", " ").replace(/\b\w/g, (l) => l.toUpperCase())}
+              <span className="absolute left-0 -bottom-1 h-[2px] w-0 bg-[#0a2540] group-hover:w-full transition-all duration-300"></span>
+            </ScrollLink>
+          ))}
+          {user && (
+            <RouterLink to="/dashboard" className="hover:text-[#0984e3]">
+              Dashboard
+            </RouterLink>
+          )}
         </nav>
 
-        {/* CTA Button (Desktop) */}
-        <Link
-          to="join-waitlist"
-          smooth={true}
-          duration={500}
-          className="hidden md:inline-block px-6 py-2 bg-[#6246ea] hover:bg-[#4e3ac9] text-white rounded-xl text-sm font-semibold transition"
-        >
-          Get Started
-        </Link>
+        <div className="hidden md:flex items-center space-x-4">
+          {user ? (
+            <>
+              <span className="text-sm text-gray-700">
+                Hi, {user.user_metadata?.name || user.email}
+              </span>
+              <button onClick={handleLogout} className="text-sm text-[#e74c3c] hover:text-[#c0392b]">
+                Log Out
+              </button>
+            </>
+          ) : (
+            <>
+              <button onClick={onSignInClick} className="text-sm text-[#0a2540] hover:text-[#0984e3]">
+                Sign In
+              </button>
+              <ScrollLink
+                to="join-waitlist"
+                smooth
+                duration={500}
+                className="bg-[#0984e3] hover:bg-[#075a96] text-white px-5 py-2 rounded-xl text-sm font-semibold cursor-pointer"
+              >
+                Get Started
+              </ScrollLink>
+            </>
+          )}
+        </div>
+
+        <button onClick={toggleMenu} className="md:hidden text-[#0a2540] hover:text-[#0984e3]">
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" stroke="currentColor" strokeWidth="2">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
       </div>
 
-      {/* Mobile Menu (Mobile) */}
-      <div
-        className={`${
-          isOpen ? "block" : "hidden"
-        } md:hidden absolute top-0 left-0 w-full bg-white/90 p-6 space-y-4`}
-      >
-        <Link
-          to="features"
-          smooth={true}
-          duration={500}
-          onClick={() => setIsOpen(false)}
-          className="hover:text-[#6246ea] transition block"
-        >
-          Features
-        </Link>
-        <Link
-          to="how-it-works"
-          smooth={true}
-          duration={500}
-          onClick={() => setIsOpen(false)}
-          className="hover:text-[#6246ea] transition block"
-        >
-          How It Works
-        </Link>
-        <Link
-          to="pricing"
-          smooth={true}
-          duration={500}
-          onClick={() => setIsOpen(false)}
-          className="hover:text-[#6246ea] transition block"
-        >
-          Pricing
-        </Link>
-        <Link
-          to="join-waitlist"
-          smooth={true}
-          duration={500}
-          onClick={() => setIsOpen(false)}
-          className="hover:text-[#6246ea] transition block"
-        >
-          Join Waitlist
-        </Link>
-        <Link
-          to="join-waitlist"
-          smooth={true}
-          duration={500}
-          onClick={() => setIsOpen(false)}
-          className="bg-[#6246ea] hover:bg-[#4e3ac9] text-white px-6 py-2 rounded-xl text-sm font-semibold transition block text-center"
-        >
-          Get Started
-        </Link>
-      </div>
+      {menuOpen && (
+        <div className="md:hidden px-6 pb-4 space-y-4 bg-white shadow-md">
+          {["features", "how-it-works", "pricing", "join-waitlist"].map((item) => (
+            <ScrollLink
+              key={item}
+              to={item}
+              smooth
+              duration={500}
+              onClick={toggleMenu}
+              className="block hover:text-[#0984e3]"
+            >
+              {item.replace("-", " ").replace(/\b\w/g, (l) => l.toUpperCase())}
+            </ScrollLink>
+          ))}
+          {user && (
+            <RouterLink to="/dashboard" onClick={toggleMenu} className="block hover:text-[#0984e3]">
+              Dashboard
+            </RouterLink>
+          )}
+          {user ? (
+            <>
+              <span className="block text-sm text-gray-700">
+                Hi, {user.user_metadata?.name || user.email}
+              </span>
+              <button
+                onClick={() => {
+                  handleLogout();
+                  toggleMenu();
+                }}
+                className="block text-sm text-[#e74c3c] hover:text-[#c0392b]"
+              >
+                Log Out
+              </button>
+            </>
+          ) : (
+            <>
+              <button onClick={onSignInClick} className="block text-sm text-[#0a2540] hover:text-[#0984e3]">
+                Sign In
+              </button>
+              <ScrollLink
+                to="join-waitlist"
+                smooth
+                duration={500}
+                onClick={toggleMenu}
+                className="block text-center bg-[#0984e3] hover:bg-[#075a96] text-white py-2 rounded-xl text-sm font-semibold"
+              >
+                Get Started
+              </ScrollLink>
+            </>
+          )}
+        </div>
+      )}
     </header>
   );
 }

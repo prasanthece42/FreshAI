@@ -1,0 +1,4 @@
+src / compoenents/ Hero and all other sections
+src supabas.js
+app.js
+index.js

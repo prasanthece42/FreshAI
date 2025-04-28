@@ -1,125 +1,185 @@
-import React, { useState, useEffect } from "react";
-import { motion } from "framer-motion";
-import { Zap, MessageSquare, Send, TrendingUp, BarChart3, Database, Mail, Target, Users, DollarSign } from "lucide-react";
+import React, { useEffect, useState } from "react";
+import {
+  MessageSquare,
+  Send,
+  Users,
+  Zap,
+  BarChart3,
+  Database,
+  Target,
+  TrendingUp,
+  DollarSign,
+  Mail,
+} from "lucide-react";
 
 const features = [
   {
-    icon: <MessageSquare className="w-6 h-6 text-[#6246ea]" />,
+    icon: <MessageSquare />,
     title: "AI Social Media Assistant",
-    desc: "Respond instantly to customer messages across all major social platforms."
+    desc: "Respond instantly to messages on social media platforms using smart, context-aware AI agents.",
+    detail:
+      "Automatically engage with your customers 24/7 across platforms like Instagram, Facebook, and WhatsApp. Improve response times, reduce manual effort, and boost customer satisfaction with trained AI.",
   },
   {
-    icon: <Send className="w-6 h-6 text-[#6246ea]" />,
+    icon: <Send />,
     title: "Smart Payment Links",
-    desc: "Send dynamic, trackable payment links directly from conversations."
+    desc: "Easily share dynamic payment links directly from conversations.",
+    detail:
+      "Generate and send one-click payment links personalized for your clients. Integrate with Stripe or Razorpay and track payments seamlessly from the dashboard.",
   },
   {
-    icon: <Users className="w-6 h-6 text-[#6246ea]" />,
+    icon: <Users />,
     title: "Contact Management",
-    desc: "Organize, track, and engage with all your customers in one place."
+    desc: "Maintain a unified customer view with a simple, intuitive CRM.",
+    detail:
+      "Track customer interactions, view conversation history, and organize leads or prospects in a clean dashboard designed for growth-focused teams.",
   },
   {
-    icon: <Zap className="w-6 h-6 text-[#6246ea]" />,
+    icon: <Zap />,
     title: "Promotional Campaigns",
-    desc: "Launch personalized promotions and measure their impact in real-time."
+    desc: "Automate offers, product launches, and promotions with AI.",
+    detail:
+      "Schedule and launch promotional messages tailored to user behavior. Drive conversions using automated responses and targeted outreach.",
   },
   {
-    icon: <BarChart3 className="w-6 h-6 text-[#6246ea]" />,
+    icon: <BarChart3 />,
     title: "Sales Analytics",
-    desc: "Track revenue, conversions, and performance insights instantly."
+    desc: "Real-time insights to measure campaign effectiveness and growth.",
+    detail:
+      "Track every metric that matters — conversations, engagement, conversion rates — with visual reports powered by intelligent data modeling.",
   },
   {
-    icon: <Database className="w-6 h-6 text-[#6246ea]" />,
+    icon: <Database />,
     title: "Train Your AI",
-    desc: "Teach your AI with custom data — via text, PDFs, or your website."
+    desc: "Upload your data or PDFs to personalize the AI's knowledge.",
+    detail:
+      "Empower the AI with your product manuals, pricing documents, or FAQs to ensure accurate responses that align with your brand and business logic.",
   },
   {
-    icon: <Target className="w-6 h-6 text-[#6246ea]" />,
+    icon: <Target />,
     title: "Automated Ad Targeting",
-    desc: "Automatically target ads to your ideal customer profiles."
+    desc: "AI finds your perfect audience and delivers your ads there.",
+    detail:
+      "Automatically build and optimize ad audiences based on customer behavior, demographic trends, and past campaign results.",
   },
   {
-    icon: <TrendingUp className="w-6 h-6 text-[#6246ea]" />,
+    icon: <TrendingUp />,
     title: "AI Insights",
-    desc: "Get data-backed suggestions for marketing, sales, and growth."
+    desc: "Receive actionable suggestions based on user behavior and data.",
+    detail:
+      "Get proactive insights into what’s working, what’s not, and how to improve — powered entirely by your usage patterns and customer interactions.",
   },
   {
-    icon: <DollarSign className="w-6 h-6 text-[#6246ea]" />,
+    icon: <DollarSign />,
     title: "Lightweight CRM",
-    desc: "Simple CRM to manage leads, pipelines, and customer journeys."
+    desc: "Track conversations, manage sales, and simplify your pipeline.",
+    detail:
+      "Designed for speed and ease of use, our CRM lets you manage relationships, assign tasks, and follow up — all without the complexity.",
   },
   {
-    icon: <Mail className="w-6 h-6 text-[#6246ea]" />,
+    icon: <Mail />,
     title: "Email Marketing Automation",
-    desc: "Send intelligent campaigns with AI-generated content & scheduling."
-  }
+    desc: "Create, schedule, and personalize email campaigns effortlessly.",
+    detail:
+      "Send welcome messages, newsletters, and win-back sequences with AI-personalized content and timing — all in one dashboard.",
+  },
 ];
 
 function Features() {
-  const [isDesktop, setIsDesktop] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  const [selected, setSelected] = useState(null);
 
   useEffect(() => {
-    const handleResize = () => {
-      setIsDesktop(window.innerWidth >= 768);
-    };
-    handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+    const checkMobile = () => setIsMobile(window.innerWidth <= 768);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
   return (
     <section
       id="features"
-      className="relative py-20 px-6 bg-[#f8f9fc]"
+      className="relative py-24 px-6 overflow-hidden bg-[#f8f9fc]"
       style={{
         backgroundImage: `
-          linear-gradient(0deg, transparent 24%, rgba(0,0,0,0.02) 25%, rgba(0,0,0,0.02) 26%, transparent 27%, transparent 74%, rgba(0,0,0,0.02) 75%, rgba(0,0,0,0.02) 76%, transparent 77%, transparent),
-          linear-gradient(90deg, transparent 24%, rgba(0,0,0,0.02) 25%, rgba(0,0,0,0.02) 26%, transparent 27%, transparent 74%, rgba(0,0,0,0.02) 75%, rgba(0,0,0,0.02) 76%, transparent 77%, transparent)
-        `,
+        linear-gradient(0deg, transparent 24%, rgba(0,0,0,0.02) 25%, rgba(0,0,0,0.02) 26%, transparent 27%, transparent 74%, rgba(0,0,0,0.02) 75%, rgba(0,0,0,0.02) 76%, transparent 77%, transparent),
+        linear-gradient(90deg, transparent 24%, rgba(0,0,0,0.02) 25%, rgba(0,0,0,0.02) 26%, transparent 27%, transparent 74%, rgba(0,0,0,0.02) 75%, rgba(0,0,0,0.02) 76%, transparent 77%, transparent)
+      `,
         backgroundSize: "40px 40px",
       }}
     >
-      {isDesktop && (
-        <>
-          <motion.div
-            initial={{ x: -100, y: -100 }}
-            animate={{ x: 0, y: 0 }}
-            transition={{ duration: 10, repeat: Infinity, repeatType: "mirror" }}
-            className="absolute w-[400px] h-[400px] bg-gradient-to-br from-[#6246ea] to-[#e45858] rounded-full opacity-30 blur-3xl top-[-150px] left-[-150px] z-0"
-          />
-          <motion.div
-            initial={{ x: 100, y: 100 }}
-            animate={{ x: 0, y: 0 }}
-            transition={{ duration: 12, repeat: Infinity, repeatType: "mirror" }}
-            className="absolute w-[300px] h-[300px] bg-gradient-to-tr from-[#3fc1c9] to-[#e45858] rounded-full opacity-30 blur-3xl bottom-[-150px] right-[-100px] z-0"
-          />
-        </>
-      )}
-
-      <div className="max-w-6xl mx-auto text-center relative z-10">
-        <h2 className="text-4xl md:text-5xl font-extrabold text-gray-900 mb-4">
-          Everything You Need in One AI Platform
+      <div className="max-w-7xl mx-auto text-center mb-16">
+        <h2 className="text-4xl md:text-6xl font-extrabold text-gray-900 mb-4">
+          Power Your Growth with AI
         </h2>
-        <p className="text-gray-600 text-lg max-w-3xl mx-auto mb-12">
-          Our AI does more than chat. It helps you sell, support, and scale your business with advanced automation and deep insights.
+        <p className="text-gray-600 text-lg md:text-xl max-w-3xl mx-auto">
+          Automate everything from social media to analytics and marketing with FreshAI’s all-in-one solution.
         </p>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 sm:gap-8">
-          {features.map((feature, index) => (
-            <motion.div
-              key={index}
-              initial={isDesktop ? { opacity: 0, y: 30 } : {}}
-              whileInView={isDesktop ? { opacity: 1, y: 0 } : {}}
-              transition={isDesktop ? { duration: 0.5, delay: index * 0.2 } : {}}
-              className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all"
-            >
-              <div className="mb-4">{feature.icon}</div>
-              <h3 className="text-xl font-semibold text-gray-800">{feature.title}</h3>
-              <p className="mt-2 text-gray-600">{feature.desc}</p>
-            </motion.div>
-          ))}
-        </div>
       </div>
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 relative">
+        {features.map((feature, index) => {
+          const isSelected = selected === index;
+
+          return (
+            <div
+              key={index}
+              className={`bg-white/80 backdrop-blur-md border p-8 rounded-3xl shadow-xl cursor-pointer transition-all duration-300 ${
+                isSelected
+                  ? "border-blue-500 shadow-2xl scale-105"
+                  : "border-white/30 hover:scale-105"
+              }`}
+              style={{
+                animation: !isMobile
+                  ? `float-${index % 2 === 0 ? "up" : "down"} 6s ease-in-out infinite`
+                  : "none",
+              }}
+              onClick={() => setSelected(isSelected ? null : index)}
+            >
+              <div className="flex items-center justify-center w-12 h-12 mb-4 bg-[#6246ea]/10 rounded-xl text-[#6246ea]">
+                {feature.icon}
+              </div>
+              <h3 className="text-xl font-semibold text-gray-800 mb-2">
+                {feature.title}
+              </h3>
+              <p className="text-gray-600 text-sm">{feature.desc}</p>
+
+              {isSelected && (
+                <div className="mt-4 text-sm text-gray-700">
+                  <p>{feature.detail}</p>
+                </div>
+              )}
+            </div>
+          );
+        })}
+      </div>
+
+      {/* Floating keyframes */}
+      <style jsx>{`
+        @keyframes float-up {
+          0% {
+            transform: translateY(0px);
+          }
+          50% {
+            transform: translateY(-10px);
+          }
+          100% {
+            transform: translateY(0px);
+          }
+        }
+
+        @keyframes float-down {
+          0% {
+            transform: translateY(0px);
+          }
+          50% {
+            transform: translateY(10px);
+          }
+          100% {
+            transform: translateY(0px);
+          }
+        }
+      `}</style>
     </section>
   );
 }
